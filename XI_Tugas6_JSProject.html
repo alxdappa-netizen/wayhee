@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎮 Game Tebak Angka Canggih</title>
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: white;
+    text-align: center;
+    padding-top: 50px;
+  }
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  .container {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    padding: 30px;
+    width: 350px;
+    margin: auto;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  }
+  input {
+    padding: 10px;
+    width: 150px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+  }
+  button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  #btn-tebak { background: #00ff88; color: #000; }
+  #btn-ulangi { background: #ff6f61; color: #fff; }
+  button:hover { opacity: 0.8; }
+  #pesan {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  #skor {
+    margin-top: 10px;
+    font-size: 16px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 8px;
+  }
+  #progress {
+    width: 100%;
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 10px;
+    margin-top: 15px;
+  }
+  #progress-bar {
+    height: 15px;
+    width: 100%;
+    background-color: limegreen;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+  }
+</style>
+</head>
+<body>
+  <h1>🎯 Game Tebak Angka Canggih</h1>
+  <div class="container">
+    <p>Komputer sudah memilih angka rahasia antara <b>1 - 100</b>.<br>
+    Coba tebak dalam <b>7 percobaan</b>!</p>
+
+    <input type="number" id="tebakan" placeholder="Masukkan tebakan">
+    <br>
+    <button id="btn-tebak" onclick="tebak()">Tebak</button>
+    <button id="btn-ulangi" onclick="ulang()">Ulangi</button>
+
+    <div id="pesan"></div>
+    <div id="skor">Percobaan tersisa: <span id="sisa">7</span></div>
+    <div id="progress">
+      <div id="progress-bar"></div>
+    </div>
+  </div>
+
+  <script>
+    let angkaRahasia = Math.floor(Math.random() * 100) + 1;
+    let percobaan = 7;
+    let selesai = false;
+
+    function tebak() {
+      if (selesai) return;
+
+      let input = document.getElementById("tebakan").value;
+      let tebakan = parseInt(input);
+
+      if (isNaN(tebakan) || tebakan < 1 || tebakan > 100) {
+        document.getElementById("pesan").innerHTML = "⚠️ Masukkan angka antara 1 - 100!";
+        return;
+      }
+
+      percobaan--;
+      document.getElementById("sisa").textContent = percobaan;
+      document.getElementById("progress-bar").style.width = (percobaan / 7 * 100) + "%";
+
+      if (tebakan === angkaRahasia) {
+        document.getElementById("pesan").innerHTML = "🎉 Benar! Angka rahasia adalah " + angkaRahasia +
+          "<br>Kamu menang dalam " + (7 - percobaan) + " percobaan!";
+        document.getElementById("pesan").style.color = "lime";
+        selesai = true;
+      } else if (percobaan === 0) {
+        document.getElementById("pesan").innerHTML = "💀 Game Over! Angka rahasia: " + angkaRahasia;
+        document.getElementById("pesan").style.color = "red";
+        selesai = true;
+      } else if (tebakan < angkaRahasia) {
+        document.getElementById("pesan").innerHTML = "📉 Terlalu kecil! Coba angka yang lebih besar.";
+        document.getElementById("pesan").style.color = "yellow";
+      } else {
+        document.getElementById("pesan").innerHTML = "📈 Terlalu besar! Coba angka yang lebih kecil.";
+        document.getElementById("pesan").style.color = "orange";
+      }
+    }
+
+    function ulang() {
+      angkaRahasia = Math.floor(Math.random() * 100) + 1;
+      percobaan = 7;
+      selesai = false;
+      document.getElementById("tebakan").value = "";
+      document.getElementById("pesan").innerHTML = "";
+      document.getElementById("sisa").textContent = percobaan;
+      document.getElementById("progress-bar").style.width = "100%";
+    }
+  </script>
+</body>
+</html>
+ nvn
+ C/-O9
